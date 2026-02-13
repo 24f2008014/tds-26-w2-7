@@ -17,7 +17,7 @@ jobs:
           key: cache-aa47b34
 
       - name: Echo cache result
-        run: echo "Cache hit: ${{ steps.cache-aa47b34.outputs.cache-hit }}"
+        run: echo "Cache hit ${{ steps.cache-aa47b34.outputs.cache-hit }}"
 
       - name: Install dependencies (only if cache miss)
         if: steps.cache-aa47b34.outputs.cache-hit != 'true'
