@@ -1,0 +1,27 @@
+name: CI with Cache
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: prime-cache-aa47b34
+        id: cache-aa47b34
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: cache-aa47b34
+
+      - name: Echo cache result
+        run: echo "Cache hit: ${{ steps.cache-aa47b34.outputs.cache-hit }}"
+
+      - name: Install dependencies (only if cache miss)
+        if: steps.cache-aa47b34.outputs.cache-hit != 'true'
+        run: npm install  # Or 'composer install' etc., for your project
+
+      - name: Run tests (example)
+        run: npm test  # Replace with your test command; optional
